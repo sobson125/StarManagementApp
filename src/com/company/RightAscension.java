@@ -22,4 +22,13 @@ public class RightAscension {
     public int getSeconds() {
         return seconds;
     }
+
+    @Override
+    public String toString() {
+        return "RightAscension{" +
+                "hours=" + hours +
+                ", minutes=" + minutes +
+                ", seconds=" + seconds +
+                '}';
+    }
 }

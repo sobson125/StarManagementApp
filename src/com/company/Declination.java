@@ -22,4 +22,13 @@ public class Declination {
     public double getSeconds() {
         return seconds;
     }
+
+    @Override
+    public String toString() {
+        return "Declination{" +
+                "degrees=" + degrees +
+                ", minutes=" + minutes +
+                ", seconds=" + seconds +
+                '}';
+    }
 }
