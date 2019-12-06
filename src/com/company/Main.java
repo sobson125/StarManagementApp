@@ -14,7 +14,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         StarService starService = new StarService();
-//        starService.createBase();
+       // starService.createBase();
         Star star2 = StarFactory.createStar("GKS9100",
                 "inna",
                 true,
@@ -40,6 +40,7 @@ public class Main {
 //        starService.getStarsFromEitherNorthOrSouthPole(true);
        // starService.getAllSupernovas();
         starService.deleteStar(star2);
+        starService.addStar(star2);
         starService.getAllStars();
     }
 }

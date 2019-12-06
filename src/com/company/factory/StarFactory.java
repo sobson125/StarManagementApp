@@ -4,15 +4,16 @@ import com.company.model.Declination;
 import com.company.model.RightAscension;
 import com.company.model.Star;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public abstract class StarFactory {
 
-    public static final Map<String, Integer> CONSTELLATIONS = new HashMap<>();
+    // pomocnicza lista, tylko i wylacznie po to, zeby manipulowac nazwa katalogu
+    public static List<Star> list = new ArrayList<>();
+   // public static final Map<String, Integer> CONSTELLATIONS = new HashMap<>();
 
     public enum GreekAlphabet {
         ALPHA, BETA, GAMMA, DELTA, EPSILON, ZETA, ETA, THETA, IOTA, KAPPA, LAMBDA,
@@ -25,7 +26,7 @@ public abstract class StarFactory {
         // w poleceniu zalozone jest, ze nazwa zawsze jest prawidlowa, wiec jej nie waliduje
         star.setName(name);
         star.setConstellation(constellation);
-        checkWhetherConstellationAlreadyExists(constellation);
+//        checkWhetherConstellationAlreadyExists(constellation);
         star.setNorthernHemisphere(isNorthernHemisphere);
         star.setDeclination(checkWhetherDeclinationIsValid(star,declination));
         star.setRightAscension(checkWhetherRightAscensionIsValid(rightAscension));
@@ -34,9 +35,9 @@ public abstract class StarFactory {
         star.setAbsoluteMagnitude(calculateAbsoluteMagnitude(star));
         star.setTemperature(checkWhetherTemperatureIsValid(temperature));
         star.setMass(checkWhetherMassIsValid(mass));
+//        star.setCatalogName(createCatalogName(star));
         star.setCatalogName(createCatalogName(star));
-
-
+        list.add(star);
         return star;
     }
 
@@ -70,6 +71,7 @@ public abstract class StarFactory {
         return value;
     }
 
+    /*
     //Method checks whether there are any Stars in given constellation
     private static void checkWhetherConstellationAlreadyExists(String constellation) {
         if (CONSTELLATIONS.containsKey(constellation)) {
@@ -79,12 +81,29 @@ public abstract class StarFactory {
         }
     }
 
+     */
+
+    public static String createCatalogName(Star star){
+        GreekAlphabet[] values = GreekAlphabet.values();
+        int howManyFound = 0;
+        String catalogName = values[0].name() + star.getConstellation();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getCatalogName().equals(catalogName)) {
+                howManyFound++;
+                catalogName = values[howManyFound].name() + star.getConstellation();
+            }
+        }
+        return catalogName;
+    }
+
+    /*
     //Method creates catalog name based on constelation and greek alphabet
-    private static String createCatalogName(Star star) {
+    public static String createCatalogName(Star star) {
         GreekAlphabet[] values = GreekAlphabet.values();
         String output = values[CONSTELLATIONS.get(star.getConstellation()).intValue()].name() + " " + star.getConstellation();
         return output;
     }
+    */
 
     //Simple methods to check if the values are valid.
     private static double calculateAbsoluteMagnitude(Star star) {
@@ -106,6 +125,7 @@ public abstract class StarFactory {
         return temperature;
     }
 
+    //inicjuje liste domyslnymi gwiazdami
     public static List<Star> fillList() {
         Star star = createStar("ABC1234",
                 "uklad",
@@ -125,7 +145,16 @@ public abstract class StarFactory {
                 7,
                 2800,
                 2.9);
-        Star star2 = createStar("GHI9100",
+        Star star2 = createStar("ZZZ1278",
+                "uklad",
+                true,
+                new Declination(60, 30, 40.25),
+                new RightAscension(12, 6, 12),
+                11,
+                7,
+                2800,
+                2.9);
+        Star star3 = createStar("GHI9100",
                 "inna",
                 true,
                 new Declination(50, 20, 30.25),
@@ -135,7 +164,17 @@ public abstract class StarFactory {
                 2300,
                 2.5);
 
-        return Stream.of(star,star1,star2).collect(Collectors.toList());
+        Star star4 = createStar("XXX1000",
+                "inna",
+                true,
+                new Declination(50, 20, 30.25),
+                new RightAscension(10, 5, 10),
+                10,
+                5,
+                2300,
+                2.5);
+
+        return Stream.of(star,star1,star2, star3,star4).collect(Collectors.toList());
     }
 
 }
