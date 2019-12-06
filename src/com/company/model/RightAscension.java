@@ -1,6 +1,8 @@
-package com.company;
+package com.company.model;
 
-public class RightAscension {
+import java.io.Serializable;
+
+public class RightAscension implements Serializable {
     private int hours;
     private int minutes;
     private int seconds;

@@ -1,6 +1,8 @@
-package com.company;
+package com.company.model;
 
-public class Declination {
+import java.io.Serializable;
+
+public class Declination implements Serializable {
     private int degrees;
     private int minutes;
     private double seconds;
