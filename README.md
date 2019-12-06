@@ -1,2 +1,2 @@
 # StarManagementApp
-Simple Final Java Classes Project
+As it turned out not so simple Final Java Classes Project
